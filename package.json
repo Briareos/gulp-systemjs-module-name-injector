@@ -20,7 +20,7 @@
     "url": "https://github.com/Briareos/gulp-systemjs-module-name-injector/issues"
   },
   "homepage": "https://github.com/Briareos/gulp-systemjs-module-name-injector#readme",
-  "devDependencies": {
+  "dependencies": {
     "readable-stream": "^2.0.2",
     "replacestream": "^4.0.0"
   }
