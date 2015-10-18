@@ -7,15 +7,23 @@ module.exports = function () {
     return new Transform({
         objectMode: true,
         transform: function (file, encoding, callback) {
-            if (file.isNull()) {
+            if (file.isNull() || file.isDirectory()) {
                 return callback(null, file);
             }
-            if (!file.isBuffer()) {
-                return callback(new Error('Only file buffers are supported'), file);
+
+            if (!file.isStream() && !file.isBuffer()) {
+                return callback(Error('Only streams and buffers are supported.'), file);
             }
 
-            var name = file.name.replace(/\.js/, '');
-            file.contents = file.contents.pipe(rs(/^System\.register\(\[/, "System.register('" + name + '",['));
+            var name = file.relative.replace(/\.js/, '');
+            var search = /^System\.register\(\[/;
+            var replace = "System.register('" + name + '", [';
+
+            if (file.isStream()) {
+                file.contents = file.contents.pipe(rs(search, replace));
+            } else {
+                file.contents = new Buffer(String(file.contents).replace(search, replace));
+            }
             return callback(null, file);
         }
     })
