@@ -17,7 +17,7 @@ module.exports = function () {
 
             var name = file.relative.replace(/\.js/, '');
             var search = /^System\.register\(\[/;
-            var replace = "System.register('" + name + '", [';
+            var replace = "System.register('" + name + "', [";
 
             if (file.isStream()) {
                 file.contents = file.contents.pipe(rs(search, replace));
