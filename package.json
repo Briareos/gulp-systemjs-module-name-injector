@@ -1,6 +1,6 @@
 {
   "name": "gulp-systemjs-module-name-injector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Injects file path as a module name in files starting with System.register([].",
   "main": "index.js",
   "scripts": {
