@@ -3,6 +3,9 @@
 var Transform = require('readable-stream/transform');
 var rs = require('replacestream');
 
+var jsExtensionRegex = /\.js/;
+var windowsBackwardSlashRegex = /\\/g;
+
 module.exports = function () {
     return new Transform({
         objectMode: true,
@@ -15,7 +18,10 @@ module.exports = function () {
                 return callback(Error('Only streams and buffers are supported.'), file);
             }
 
-            var name = file.relative.replace(/\.js/, '');
+            var name = file.relative
+                .replace(jsExtensionRegex, '')
+                .replace(windowsBackwardSlashRegex, '/');
+
             var search = /^System\.register\(\[/;
             var replace = "System.register('" + name + "', [";
 
